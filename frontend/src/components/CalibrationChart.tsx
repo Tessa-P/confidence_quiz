@@ -8,20 +8,16 @@ import {
   XAxis,
   YAxis,
 } from "recharts"
+import { QuizQuestion } from "@/types"
 
 interface QuestionResponse {
   answer: string
   confidence: number
 }
 
-interface Question {
-  id: string
-  correct: string
-}
-
 interface Props {
   responses: Record<string, QuestionResponse>
-  questions: Question[]
+  questions: QuizQuestion[]
 }
 
 export default function CalibrationChart({ responses, questions }: Props) {
@@ -31,11 +27,11 @@ export default function CalibrationChart({ responses, questions }: Props) {
 
   const data = confidenceLevels.map((level) => {
     const questionsAtLevel = questions.filter(
-      (q) => responses[q.id]?.confidence === level,
+      (q) => responses[String(q.id)]?.confidence === level,
     )
     const answered = questionsAtLevel.length
     const correct = questionsAtLevel.filter(
-      (q) => responses[q.id]?.answer === q.correct,
+      (q) => responses[String(q.id)]?.answer === q.correct_answer,
     ).length
 
     return {

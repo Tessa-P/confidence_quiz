@@ -1,0 +1,4 @@
+intialize with 
+
+frontend: npm run dev
+backend: uv run python -m fastapi dev app/main.py
