@@ -11,4 +11,4 @@ router = APIRouter()
 def get_questions(
     session: SessionDep
 ) -> list[QuizQuestion]:
-    return session.exec(select(QuizQuestion)).all()
+    return session.exec(select(QuizQuestion).order_by(QuizQuestion.id)).all()

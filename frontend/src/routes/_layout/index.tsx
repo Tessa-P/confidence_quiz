@@ -25,7 +25,7 @@ interface QuestionResponse {
 const headers: string[] = [
   "Are these animal facts true or false?",
   "Which historical figure was born first?",
-  "Which country had more people in 2019?", // TODO: update this to 2025
+  "Which country had more people in 2025?", // TODO: update this to 2025
   "Are these science facts true or false?"
 ]
 
@@ -33,6 +33,7 @@ type QuizResponses = Record<string, QuestionResponse>
 
 function Home() {
   const [responses, setResponses] = useState<QuizResponses>({})
+  const [show, setShow] = useState(false)
   const [submitted, setSubmitted] = useState(false)
 
   const { data: quizQuestions, isLoading, error } = useQuery<QuizQuestion[]>({
@@ -54,6 +55,11 @@ function Home() {
       ...prev,
       [id]: { answer, confidence },
     }))
+  }
+
+  function handleSubmission() {
+    setSubmitted(true)
+    setShow(true)
   }
 
   
@@ -104,12 +110,15 @@ function Home() {
         <div key={`chunk-${chunkIndex}`} className="flex flex-col gap-6">
           <h2 className="text-xl font-semibold mt-4">{headers[chunkIndex]}</h2>
 
-          {chunk.map(({ id, question_text, optionA, optionB }) => (
+          {chunk.map(({ id, question_label, question_text, optionA, optionB, correct_answer }) => (
         <Question
           key={id ?? `question-${question_text}`}
+          question_label={question_label}
           question={question_text}
           optionA={optionA}
           optionB={optionB}
+          answer={correct_answer}
+          show={show}
           onChange={(answer, confidence) => handleChange(String(id), answer, confidence)}
         />
       ))}
@@ -121,7 +130,7 @@ function Home() {
 
       <button
         className="self-start rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors"
-        onClick={() => setSubmitted(true)}
+        onClick={() => handleSubmission()}
       >
         See my results
       </button>
@@ -129,6 +138,8 @@ function Home() {
       {submitted && (
         <CalibrationChart responses={responses} questions={quizQuestions} />
       )}
+
+      <pre>{ JSON.stringify(responses, null, 2) }</pre>
     </div>
   )
 }

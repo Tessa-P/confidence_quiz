@@ -20,6 +20,12 @@ interface Props {
   questions: QuizQuestion[]
 }
 
+interface dataEntry {
+  confidence: number
+  accuracy: number | null
+  count: number
+}
+
 export default function CalibrationChart({ responses, questions }: Props) {
   // For each confidence level, calculate how many answered questions at that
   // confidence were correct, expressed as a percentage
@@ -42,6 +48,11 @@ export default function CalibrationChart({ responses, questions }: Props) {
     }
   })
 
+  function getMinimumAccuracy (data: dataEntry[]): number {
+    // for entry in data
+    return Math.min(...data.map(entry => entry.accuracy).filter(val => val !== null))
+  }
+
   return (
     <div className="flex flex-col gap-2">
       <h2 className="font-semibold text-lg">Calibration</h2>
@@ -61,8 +72,9 @@ export default function CalibrationChart({ responses, questions }: Props) {
             label={{ value: "Stated confidence", position: "insideBottom", offset: -4 }}
           />
           <YAxis
-            domain={[0, 100]}
+            domain={[(Math.min(getMinimumAccuracy(data)), 50), 100]}
             tickFormatter={(v) => `${v}%`}
+            // ticks={confidenceLevels}
             label={{ value: "Actually correct", angle: -90, position: "insideLeft", offset: 10 }}
           />
           {/* Perfect calibration diagonal */}
