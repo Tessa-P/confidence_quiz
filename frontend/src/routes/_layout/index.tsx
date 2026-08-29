@@ -172,9 +172,9 @@ function Home() {
       <button
         className="self-start rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         onClick={() => handleSubmission(respondent_ID, responses)}
-        disabled={isSubmitting}
+        disabled={isSubmitting || submitSuccess}
       >
-        {isSubmitting ? 'Submitting...' : 'See my results'}
+        {submitSuccess ? 'Answers submitted!' : isSubmitting ? 'Submitting...' : 'See my results'}
       </button>
 
       {isSubmitting && (
@@ -194,7 +194,7 @@ function Home() {
         <CalibrationChart responses={responses} questions={quizQuestions} />
       )}
 
-      <pre><p>userID: {respondent_ID}</p></pre>
+      {/* <pre><p>userID: {respondent_ID}</p></pre>
       <pre>{JSON.stringify(responses, null, 2)}</pre>
       <pre>{Object.entries(responses).map(([id, response]) => (
         <div>
@@ -203,7 +203,7 @@ function Home() {
           <p>Confidence: {response.confidence}</p>
           <br />
         </div>
-      ))}</pre>
+      ))}</pre> */}
     </div>
   )
 }
