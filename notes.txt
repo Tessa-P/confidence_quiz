@@ -2,3 +2,8 @@ intialize with
 
 frontend: npm run dev
 backend: uv run python -m fastapi dev app/main.py
+
+on every change to the API surface, regenerate the client before commiting with
+    # make sure backend is running on localhost
+    cd frontend
+    npm run update-client
