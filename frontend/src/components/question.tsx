@@ -6,8 +6,8 @@ import { Slider } from "@/components/ui/slider"
 interface QuestionProps {
   question: string
   question_label: string
-  optionA: string
-  optionB: string
+  option_a: string
+  option_b: string
   answer: string
   show: boolean
   onChange?: (answer: string, confidence: number) => void
@@ -18,7 +18,7 @@ const CONFIDENCE_MIN = 55
 const CONFIDENCE_MAX = 95
 const CONFIDENCE_STEP = 10
 
-export default function Question({ question, question_label, optionA, optionB, answer, show, onChange }: QuestionProps) {
+export default function Question({ question, question_label, option_a, option_b, answer, show, onChange }: QuestionProps) {
   const [selected, setSelected] = useState<string>("")
   const [confidence, setConfidence] = useState<number>(75)
 
@@ -42,11 +42,11 @@ export default function Question({ question, question_label, optionA, optionB, a
         <RadioGroup value={selected} onValueChange={handleAnswerChange}>
           <div className="flex items-center gap-2">
             <RadioGroupItem value="A" id={`${question}-A`} />
-              <Label htmlFor={`${question}-A`}><div className={show && answer === "A" ? 'font-bold': ''}>{optionA}</div></Label>
+              <Label htmlFor={`${question}-A`}><div className={show && answer === "A" ? 'font-bold': ''}>{option_a}</div></Label>
           </div>
           <div className="flex items-center gap-2">
             <RadioGroupItem value="B" id={`${question}-B`} />
-            <Label htmlFor={`${question}-B`}><div className={show && answer === "B" ? 'font-bold': ''}>{optionB}</div></Label>
+            <Label htmlFor={`${question}-B`}><div className={show && answer === "B" ? 'font-bold': ''}>{option_b}</div></Label>
           </div>
         </RadioGroup>
       </div>

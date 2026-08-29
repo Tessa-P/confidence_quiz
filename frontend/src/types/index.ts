@@ -2,8 +2,8 @@ export interface QuizQuestion {
     id: number | null
     question_label: string
     question_text: string
-    optionA: string
-    optionB: string
+    option_a: string
+    option_b: string
     correct_answer: string
 }
 
@@ -12,7 +12,7 @@ export interface QuizAnswer {
     respondent_id: number
     question_id: number
     answer_given: number
-    confidence: number
+    confidence_given: number
 }
 
 export interface Respondent {
