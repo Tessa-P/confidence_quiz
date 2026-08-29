@@ -9,6 +9,7 @@
     "lint": "biome check --write --unsafe --no-errors-on-unmatched --files-ignore-unknown=true ./",
     "preview": "vite preview",
     "generate-client": "openapi-ts",
+    "update-client": "curl http://localhost:8000/api/v1/openapi.json -o openapi.json && npm run generate-client",
     "test": "bunx playwright test",
     "test:ui": "bunx playwright test --ui"
   },
